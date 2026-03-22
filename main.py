@@ -10,7 +10,6 @@ def main():
 	try:
 		preprocessed_df = preprocess()
 		print(f"✓ Preprocessed {len(preprocessed_df)} documents (after filtering advertisements)")
-		print(f"  Columns: {preprocessed_df.columns.tolist()}")
 	except Exception as e:
 		print(f"✗ Preprocessing failed: {e}")
 		sys.exit(1)
@@ -61,4 +60,5 @@ def main():
 	return results
 
 if __name__ == "__main__":
+	results = main()
 	results = main()

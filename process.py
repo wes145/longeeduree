@@ -20,8 +20,7 @@ def fit_bertopic(df, text_column=None, min_topic_size=10, language='english'):
 	# Initialize and fit BERTopic
 	topic_model = BERTopic(
 		language=language,
-		min_topic_size=min_topic_size,
-		verbose=True
+		min_topic_size=min_topic_size
 	)
 	topics, probs = topic_model.fit_transform(documents)
 	
@@ -55,9 +54,6 @@ def generate_overview(topic_model, topics, df, documents):
 
 def process(preprocessed_df):
 	"""Run BERTopic on preprocessed dataframe and return results."""
-	# Debug: print available columns
-	print(f"Available columns: {preprocessed_df.columns.tolist()}")
-	
 	topic_model, topics, probs, documents = fit_bertopic(preprocessed_df, min_topic_size=10)
 	
 	if topic_model is None:
@@ -69,9 +65,13 @@ def process(preprocessed_df):
 	print("\n=== BERTopic Results Overview ===")
 	print(f"Total documents: {overview['num_documents']}")
 	print(f"Number of topics: {overview['num_topics']}")
-	print("\nTop topics:")
-	print(overview['topic_info'].head(10))
 	
+	return {
+		'model': topic_model,
+		'topics': topics,
+		'probabilities': probs,
+		'overview': overview
+	}
 	return {
 		'model': topic_model,
 		'topics': topics,
